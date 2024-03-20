@@ -1,14 +1,16 @@
-from data.graphics import window, line, point
+from data.graphics import window, line, point, cell
 
 width = 800
 height = 600
 
-line1 = line(point(0,0), point(width, height))
+
 
 
 def main():
     win = window(width, height)
-    win.draw_line(line1, "red")
+    cell1 = cell(20, 50, 20, 50, win)
+    cell1.top_wall = False
+    cell1.draw("red")
     win.wait_for_close()
 
 main()
