@@ -84,3 +84,14 @@ class cell:
             self.win.draw_line(line(point(self.x2, self.y1),
                                     point(self.x2, self.y2)),
                                fill)
+            
+    def centre(self):
+        return point((self.x1 + self.x2) / 2, (self.y1 + self.y2) / 2)
+            
+
+    def draw_move(self, to_cell, undo = False):
+        colour = "red"
+        if undo:
+            colour = "gray"
+        line1 = line(self.centre(), to_cell.centre())
+        line1.draw(self.win.canvas, colour)
