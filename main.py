@@ -1,19 +1,18 @@
-from data.graphics import window, line, point, cell
+from data.graphics import window, maze
 
-width = 800
-height = 600
+border = 15
+cell_width = 10
+cell_height = 10
+columns = 50
+rows = 50
 
 
 
 
 def main():
-    win = window(width, height)
-    cell1 = cell(20, 50, 20, 50, win)
-    cell2 = cell(80, 90, 80, 90, win)
-    cell1.top_wall = False
-    cell1.draw("red")
-    cell2.draw("blue")
-    cell1.draw_move(cell2, False)
+    win = window(2 * border + cell_width * columns, 2 * border + cell_height * rows)
+    maze1 = maze(border, border, columns, rows, cell_width, cell_height, win)
+    maze1._create_cells()
     win.wait_for_close()
 
 main()
