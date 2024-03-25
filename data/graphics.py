@@ -54,37 +54,37 @@ class cell:
                  y1,
                  y2,
                  win,
-                 left_wall = True,
-                 right_wall = True,
-                 top_wall = True,
-                 bottom_wall = True):
-        self.left_wall = left_wall
-        self.right_wall = right_wall
-        self.top_wall = top_wall
-        self.bottom_wall = bottom_wall
+                 left = True,
+                 right = True,
+                 top = True,
+                 bottom = True):
+        self.left = left
+        self.right = right
+        self.top = top
+        self.bottom = bottom
         self.x1 = x1
         self.x2 = x2
         self.y1 = y1
         self.y2 = y2
         self.win = win
+        self.left_wall = line(point(self.x1, self.y1), point(self.x1, self.y2))
+        self.right_wall = line(point(self.x2, self.y1), point(self.x2, self.y2))
+        self.top_wall = line(point(self.x1, self.y1), point(self.x2, self.y1))
+        self.bottom_wall = line(point(self.x1, self.y2), point(self.x2, self.y2))
     
     def draw(self, fill):
-        if self.top_wall:
-            self.win.draw_line(line(point(self.x1, self.y1),
-                                    point(self.x2, self.y1)),
-                               fill)
-        if self.bottom_wall:
-            self.win.draw_line(line(point(self.x1, self.y2),
-                                    point(self.x2, self.y2)),
-                               fill)
-        if self.left_wall:
-            self.win.draw_line(line(point(self.x1, self.y1),
-                                    point(self.x1, self.y2)),
-                               fill)
-        if self.right_wall:
-            self.win.draw_line(line(point(self.x2, self.y1),
-                                    point(self.x2, self.y2)),
-                               fill)
+        self.draw_helper(fill, self.left, self.left_wall)
+        self.draw_helper(fill, self.right, self.right_wall)
+        self.draw_helper(fill, self.top, self.top_wall)
+        self.draw_helper(fill, self.bottom, self.bottom_wall)
+
+    def draw_helper(self, fill, side_bool, side):
+        if side_bool:
+            self.win.draw_line(side, fill)
+        else:
+            self.win.draw_line(side, "white")
+            
+
             
     def centre(self):
         return point((self.x1 + self.x2) / 2, (self.y1 + self.y2) / 2)
@@ -117,6 +117,8 @@ class maze:
         self.win = win
         self.cells = []
         self._create_cells()
+        self._break_entrance_and_exit()
+        self._animate()
     
     def _create_cells(self):
         for i in range(self.num_columns):
@@ -132,8 +134,11 @@ class maze:
         for l in self.cells:
             for c in l:
                 c.draw("black")
-        self._animate()
 
     def _animate(self):
         self.win.redraw()
         sleep(0.05)
+
+    def _break_entrance_and_exit(self):
+        self.cells[0][0].left_wall = False
+        self.cells[-1][-1].right_wall = False
