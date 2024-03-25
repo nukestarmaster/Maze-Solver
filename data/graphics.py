@@ -116,6 +116,7 @@ class maze:
         self.cell_height = cell_height
         self.win = win
         self.cells = []
+        self._create_cells()
     
     def _create_cells(self):
         for i in range(self.num_columns):
