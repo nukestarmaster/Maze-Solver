@@ -73,6 +73,8 @@ class cell:
         self.bottom_wall = line(point(self.x1, self.y2), point(self.x2, self.y2))
     
     def draw(self, fill):
+        if self.win is None:
+            return
         self.draw_helper(fill, self.left, self.left_wall)
         self.draw_helper(fill, self.right, self.right_wall)
         self.draw_helper(fill, self.top, self.top_wall)
@@ -96,49 +98,3 @@ class cell:
             colour = "gray"
         line1 = line(self.centre(), to_cell.centre())
         line1.draw(self.win.canvas, colour)
-
-class maze:
-    def __init__(
-            self,
-            x1,
-            y1,
-            num_rows,
-            num_columns,
-            cell_width,
-            cell_height,
-            win
-    ):
-        self.x1 = x1
-        self.y1 = y1
-        self.num_rows = num_rows
-        self.num_columns = num_columns
-        self.cell_width = cell_width
-        self.cell_height = cell_height
-        self.win = win
-        self.cells = []
-        self._create_cells()
-        self._break_entrance_and_exit()
-        self._animate()
-    
-    def _create_cells(self):
-        for i in range(self.num_columns):
-            list = []
-            for j in range(self.num_rows):
-                list.append(cell(
-                    self.x1 + i * self.cell_width,
-                    self.x1 + (i + 1) * self.cell_width,
-                    self.y1 + j * self.cell_height,
-                    self.y1 + (j + 1) * self.cell_height,
-                    self.win))
-            self.cells.append(list)
-        for l in self.cells:
-            for c in l:
-                c.draw("black")
-
-    def _animate(self):
-        self.win.redraw()
-        sleep(0.05)
-
-    def _break_entrance_and_exit(self):
-        self.cells[0][0].left_wall = False
-        self.cells[-1][-1].right_wall = False
