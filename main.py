@@ -2,11 +2,11 @@ from data.graphics import window
 from data.maze import maze
 
 border = 15
-cell_width = 10
-cell_height = 10
-columns = 100
-rows = 100
-delay = 0
+cell_width = 25
+cell_height = 25
+columns = 20
+rows = 20
+delay = 0.01
 
 
 

@@ -71,6 +71,7 @@ class cell:
         self.right_wall = line(point(self.x2, self.y1), point(self.x2, self.y2))
         self.top_wall = line(point(self.x1, self.y1), point(self.x2, self.y1))
         self.bottom_wall = line(point(self.x1, self.y2), point(self.x2, self.y2))
+        self.visited = False
     
     def draw(self, fill):
         if self.win is None:
@@ -86,8 +87,7 @@ class cell:
         else:
             self.win.draw_line(side, "white")
             
-
-            
+    
     def centre(self):
         return point((self.x1 + self.x2) / 2, (self.y1 + self.y2) / 2)
             
