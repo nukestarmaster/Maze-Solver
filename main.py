@@ -14,6 +14,7 @@ delay = 0.01
 def main():
     win = window(2 * border + cell_width * columns, 2 * border + cell_height * rows)
     maze1 = maze(border, border, columns, rows, cell_width, cell_height, win, delay)
+    maze1.solve()
     win.wait_for_close()
 
 main()
