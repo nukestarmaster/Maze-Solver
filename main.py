@@ -4,8 +4,8 @@ from data.maze import maze
 border = 15
 cell_width = 25
 cell_height = 25
-columns = 20
-rows = 20
+columns = 25
+rows = 25
 delay = 0.01
 
 
